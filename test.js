@@ -12,17 +12,17 @@ if (process.argv[2] === 'client') {
 } else {
   server()
   startClient()
-  // startClient()
-  // startClient()
+  startClient()
+  startClient()
 }
 
 function server() {
   var s = net.createServer(onConnection)
   s.listen(PORT)
   s.on('error', function(e) {
-    console.log(e)
+    console.log('server>', e)
   })
-  console.log('server listening on '+HOST+':'+PORT)
+  console.log('server> listening on '+HOST+':'+PORT)
 }
 function onConnection(c) {
   c.setTimeout(1000)
@@ -42,21 +42,24 @@ function onConnection(c) {
   ins.on('data', function(d) {
     as.equal('object', typeof d)
     d = JSON.parse(d)
-    // console.log(d.toString(), '?', MSGS[msgsReceived])
+    // console.log('server>', d.toString(), '?', MSGS[msgsReceived])
     as.deepEqual(d, MSGS[msgsReceived])
     msgsReceived++
-    if (msgsReceived === MSGS.length) console.log('win!')
+    if (msgsReceived === MSGS.length) console.log('server> win!')
   })
 
   c.on('timeout', function() {
-    console.log('connection timeout')
+    console.log('server> connection timeout')
     c.end();
   })
   c.on('end', function() {
-    console.log('client disconnected')
+    console.log('server> client disconnected')
   })
 }
 
+//
+// client that sends only netstrings to the server
+//
 // function client() {
 //   var s = net.connect(PORT, HOST)
 //   s.on('connect', function() {
@@ -71,6 +74,9 @@ function onConnection(c) {
 //   })
 // }
 
+//
+// client that sends buffers and json to the server
+//
 function client() {
   var j = jotan(PORT, HOST)
   j.send(new Buffer("abc"))
