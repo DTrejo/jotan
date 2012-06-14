@@ -1,7 +1,7 @@
 {
   "author": "David Trejo <david.daniel.trejo@gmail.com> (http://dtrejo.com/)",
   "name": "jotan",
-  "description": "makes it easy to stream json over tcp using netstreams",
+  "description": "makes it easy to stream json over tcp using netstrings",
   "version": "0.0.0",
   "main": "jotan.js",
   "scripts": {

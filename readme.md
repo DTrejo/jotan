@@ -4,8 +4,14 @@ playing with sending framed data over tcp sockets. because udp in node is slow.
 
 Work in progress
 
-jotan — *j*son *o*ver *t*cp *a*nd *n*etstrings
+`jotan` — *j*&zwj;son *o*&zwj;ver *t*&zwj;cp *a*&zwj;nd *n*&zwj;etstrings
 ===
+
+### install
+
+```sh
+$ npm install jotan --save
+```
 
 ## client
 
@@ -30,7 +36,7 @@ setTimeout(function() {
 ```
 
 ## server
-See test.js for an example.
+See `test.js` for an example.
 
 ## todos
 - client
@@ -43,3 +49,5 @@ See test.js for an example.
   - what to do when client sends bad data
   - emit errors
   - chainable
+
+## MIT License
