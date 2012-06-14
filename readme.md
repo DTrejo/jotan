@@ -7,7 +7,7 @@ Work in progress
 `jotan` — *j*&zwj;son *o*&zwj;ver *t*&zwj;cp *a*&zwj;nd *n*&zwj;etstrings
 ===
 
-### install
+## install
 
 ```sh
 $ npm install jotan --save
@@ -49,5 +49,9 @@ See `test.js` for an example.
   - what to do when client sends bad data
   - emit errors
   - chainable
+- tests!
+  - performance / stress
+  - why isn't keepalive working as expected
+  - good values for server timeout
 
 ## MIT License
