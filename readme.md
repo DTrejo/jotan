@@ -70,6 +70,8 @@ See `tests/strings-and-buffers.js` for a working example.
   - socket.setKeepAlive
 - server
   - what to do when client sends bad data
+  - if payload is too big, as dictated by the prepended length, drop it to
+    prevent ddos
   - emit errors
   - chainable
   - drop data instead of backpressure

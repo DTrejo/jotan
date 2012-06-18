@@ -9,6 +9,8 @@ var nsWrite = ns.nsWrite
 module.exports = jotan
 
 function jotan(port, host, options) {
+  port = port || 8989
+  host = host || 'localhost'
   options = options || {}
   // TODO: figure out how this works.
   // options.initialDelay = options.initialDelay || 500 //ms('500ms')
@@ -44,6 +46,7 @@ function jotan(port, host, options) {
       socket.end(data, encoding)
       return self
     }
+    , socket: socket
   }
   return self
 }
