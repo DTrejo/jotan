@@ -4,9 +4,6 @@
   "description": "makes it easy to stream json over tcp using netstrings",
   "version": "0.0.0",
   "main": "jotan.js",
-  "scripts": {
-    "test": "node test.js"
-  },
   "dependencies": {
     "netstring": "https://github.com/DTrejo/node-netstring/tarball/master",
     "ms": "~0.1.0"
