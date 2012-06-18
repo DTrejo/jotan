@@ -1,6 +1,3 @@
-//
-// TODO: look into socket.setKeepAlive at some point
-//
 var net = require('net')
 var ms = require('ms')
 var ns = require('netstring')
@@ -10,6 +7,7 @@ var nsWrite = ns.nsWrite
 // jotan client
 //
 module.exports = jotan
+
 function jotan(port, host, options) {
   options = options || {}
   // TODO: figure out how this works.
@@ -31,6 +29,9 @@ function jotan(port, host, options) {
 
   var self = {
     send: function(payload) {
+      if (typeof payload !== 'string' && !Buffer.isBuffer(payload)) {
+        throw new Error('payload must be a Buffer or string.')
+      }
       // no need to convert to utf8, b/c netstrings lib does this for you
       var str = nsWrite(payload)
 

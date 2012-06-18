@@ -1,11 +1,17 @@
 playing with sending framed data over tcp sockets. because udp in node is slow.
 
+Work in progress.
+
 ---
 
-Work in progress
-
-`jotan` — *j*&zwj;son *o*&zwj;ver *t*&zwj;cp *a*&zwj;nd *n*&zwj;etstrings
+`jotan` — *j*&zwj;trings *o*&zwj;ver *t*&zwj;cp *a*&zwj;nd *n*&zwj;etstrings
 ===
+
+This is a thin wrapper around the netstrings module which makes it easy to send
+strings & buffers over tcp.
+
+If you feel like sending json you can do that, all you need to do is add a line
+to stringify and a line to parse, as you can see in `tests/json.js`.
 
 ## install
 
@@ -18,29 +24,40 @@ $ npm install jotan --save
 ### how to connect to a server
 
 ```js
-var jotan = require('jotan')
+  var j = jotan(PORT, HOST)
+  j.send(new Buffer('café'))
+  j.send('c')
 
-var j = jotan(PORT, HOST)
-j.send(new Buffer("c"))
-
-setTimeout(function() {
-  j.send({ life: 'rocks!' })
-
-  // fails due to default 1000ms timeout on the server
   setTimeout(function() {
-    j.send({ life: 'rocks!' })
-    j.end()
-  }, 1100)
+    j.send('life rocks!')
 
-}, 500)
+    // fails due to default 1000ms timeout on the server
+    setTimeout(function() {
+      j.send('life rocks!')
+      j.end()
+    }, 1100)
+
+  }, 500)
 ```
 
 ## server
-See `test.js` for an example.
+One `.send` from the client results in one `data` event on the server's
+`messageStream`.
+
+Where possible the API mimics that of the `net` module.
+
+See `tests/strings-and-buffers.js` for a working example.
 
 ```js
-var server = jotan.createServer()
+  jotan.createServer(onConnection, { port: PORT })
 
+  function onConnection(rawSocket, messageStream) {
+    messageStream.on('data', function(buf) {
+      as.equal('object', typeof buf)
+      var str = buf.toString('utf8')
+      console.log('server>', str, '?', MSGS[msgsReceived])
+    })
+  }
 ```
 
 ## todos
@@ -49,14 +66,14 @@ var server = jotan.createServer()
   - emit errors
   - chainable
   - pipeable
+  - socket.setKeepAlive
 - server
-  - expose a server
   - what to do when client sends bad data
   - emit errors
   - chainable
+  - drop data instead of backpressure
 - tests!
   - performance / stress
-  - why isn't keepalive working as expected
   - good values for server timeout
 
 ## MIT License
