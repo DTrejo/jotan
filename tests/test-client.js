@@ -29,13 +29,13 @@ function onConnection(c) {
   var ins = new ns.Stream(c)
 
   var MSGS = [
-    "abc",
-    "hello world!",
-    "café",
-    "a",
-    "b",
-    "c",
-    {"life":"rocks!"}
+    'abc',
+    'hello world!',
+    'café',
+    'a',
+    'b',
+    'c',
+    {'life':'rocks!'}
   ]
 
   var msgsReceived = 0
@@ -64,12 +64,12 @@ function onConnection(c) {
 //   var s = net.connect(PORT, HOST)
 //   s.on('connect', function() {
 //     console.log('client connected to server')
-//     s.write(new Buffer("3:abc,"))
-//     s.write(new Buffer("12:hello"))
-//     s.write(new Buffer(" world!,"))
-//     s.write(new Buffer("5:café,"))
-//     s.write(new Buffer("1:a,1:b,1:c,"))
-//     // s.write(new Buffer(","))
+//     s.write(new Buffer('3:abc,'))
+//     s.write(new Buffer('12:hello'))
+//     s.write(new Buffer(' world!,'))
+//     s.write(new Buffer('5:café,'))
+//     s.write(new Buffer('1:a,1:b,1:c,'))
+//     // s.write(new Buffer(','))
 //     s.end()
 //   })
 // }
@@ -79,12 +79,12 @@ function onConnection(c) {
 //
 function client() {
   var j = jotan(PORT, HOST)
-  j.send(new Buffer("abc"))
-  j.send(new Buffer("hello world!"))
-  j.send(new Buffer("café"))
-  j.send(new Buffer("a"))
-  j.send(new Buffer("b"))
-  j.send(new Buffer("c"))
+  j.send(new Buffer('abc'))
+  j.send(new Buffer('hello world!'))
+  j.send(new Buffer('café'))
+  j.send(new Buffer('a'))
+  j.send(new Buffer('b'))
+  j.send(new Buffer('c'))
 
   setTimeout(function() {
     j.send({ life: 'rocks!' })
