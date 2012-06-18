@@ -6,7 +6,9 @@ var ms = require('ms')
 var ns = require('netstring')
 var nsWrite = ns.nsWrite
 
+//
 // jotan client
+//
 module.exports = jotan
 function jotan(port, host, options) {
   options = options || {}
@@ -16,31 +18,66 @@ function jotan(port, host, options) {
   var connected = false
   var q = [] // FIFO list of strings to be written
 
-  var s = net.connect(port, host)
+  var socket = net.connect(port, host)
   // s.setKeepAlive(true, options.initialDelay)
-  s.on('connect', function() {
+  socket.on('connect', function() {
     connected = true
     while (q.length) {
-      s.write(q.shift())
+      socket.write(q.shift())
     }
   })
 
-  s.on('error', console.error) // TODO reconnection and error handling
+  socket.on('error', console.error) // TODO reconnection and error handling
 
   var self = {
-    send: function(data) {
-      if (Buffer.isBuffer(data)) data = data.toString('utf8') // TODO: reconsider
-      var pay = JSON.stringify(data)
-      var str = nsWrite(pay)
+    send: function(payload) {
+      // no need to convert to utf8, b/c netstrings lib does this for you
+      var str = nsWrite(payload)
 
       if (!connected) q.push(str)
-      else s.write(str)
+      else socket.write(str)
 
       return self
     }
     , end: function(data, encoding) {
-      s.end(data, encoding)
+      socket.end(data, encoding)
+      return self
     }
   }
   return self
+}
+
+//
+// jotan server
+//
+// mimics a tcp server, except that it calls back with a ns.Stream, and sets the
+// timeout on each connection for your convenience.
+//
+jotan.createServer = function(onConnectionCallback, options) {
+  onConnectionCallback = onConnectionCallback || function() {}
+  options.timeout = options.timeout || 1000
+  options.port = options.port || 8989
+
+  var server = net.createServer(handleConnection)
+  server.on('error', function(e) {
+    console.log('server>\n', e.stack)
+  })
+  server.listen(options.port)
+  console.log('server> listening on tcp://localhost:'+options.port)
+  return server
+
+  function handleConnection(c) {
+    c.setTimeout(options.timeout)
+    var messageStream = new ns.Stream(c)
+
+    c.on('timeout', function() {
+      console.log('server> connection timeout. Ending connection.')
+      c.end();
+    })
+    c.on('end', function() {
+      console.log('server> client disconnected')
+    })
+
+    onConnectionCallback(c, messageStream)
+  }
 }

@@ -38,6 +38,11 @@ setTimeout(function() {
 ## server
 See `test.js` for an example.
 
+```js
+var server = jotan.createServer()
+
+```
+
 ## todos
 - client
   - reconnect
