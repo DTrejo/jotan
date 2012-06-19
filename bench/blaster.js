@@ -1,7 +1,7 @@
 jotan = require('../')
 
-// var j = jotan(null, 'jotan.jit.su')
-var j = jotan()
+var j = jotan(null, 'jotan.jit.su')
+// var j = jotan()
 
 setTimeout(blast, 100)
 

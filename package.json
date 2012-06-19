@@ -2,7 +2,7 @@
   "author": "David Trejo <david.daniel.trejo@gmail.com> (http://dtrejo.com/)",
   "name": "jotan",
   "description": "makes it easy to stream json over tcp using netstrings",
-  "version": "0.0.0-1",
+  "version": "0.0.0-2",
   "main": "jotan.js",
   "dependencies": {
     "netstring": "https://github.com/DTrejo/node-netstring/tarball/master",
@@ -15,6 +15,6 @@
   },
   "subdomain": "jotan",
   "scripts": {
-    "start": "node ./bench/server.js"
+    "start": "./bench/server.js"
   }
 }
