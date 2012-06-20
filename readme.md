@@ -1,10 +1,11 @@
-playing with sending framed data over tcp sockets. because udp in node is slow.
+Playing with sending framed data over tcp sockets. Because udp in node is slow.
 
-Work in progress.
+**UPDATE:** the benchmarks say that udp is faster than framed tcp. Feel free to
+run them (see `bench/`) to see for yourself.
 
 ---
 
-`sotan` — *s*&zwj;trings *o*&zwj;ver *t*&zwj;cp *a*&zwj;nd *n*&zwj;etstrings
+`jotan` — *s*&zwj;trings *o*&zwj;ver *t*&zwj;cp *a*&zwj;nd *n*&zwj;etstrings
 ===
 
 This is a thin wrapper around the netstrings module which makes it easy to send
@@ -17,7 +18,6 @@ to stringify and a line to parse, as you can see in `tests/json.js`.
 
 ```sh
 $ npm install jotan --save
-# yes, spell it with a "j"
 ```
 
 ## client
